@@ -1,0 +1,58 @@
+.CameraPage {
+  gap: 5dvh;
+  height: calc(100dvh - 21dvh);
+  /* border: 1px solid #fff; */
+  justify-content: flex-start !important;
+  padding: 5dvh 0;
+}
+.header {
+  /* border: 1px solid #fff; */
+  height: 6dvh;
+}
+.captureTxtImg {
+  width: 43dvh;
+}
+.likeThisImg {
+  width: 41dvh;
+}
+
+.main {
+  /* border: 1px solid #fff; */
+  height: 47.5vw;
+  border: 1.5vw solid transparent;
+  border-image-slice: 1;
+  border-width: 1.5vw;
+  border-image-source: linear-gradient(to right, #42d3d3, #f24ec1);
+  /* -webkit-mask-image: -webkit-radial-gradient(white, black); */
+  border-radius: 2vw;
+  background-color: #3a0472;
+  position: relative;
+}
+.countdown {
+  position: absolute;
+  top: 40%;
+  font-size: 13vw;
+}
+.webcamParent {
+  position: relative;
+  width: 60vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#webcam {
+  width: 100%;
+}
+.capturedImage {
+  width: 100%;
+  transform: translate(0.1vw, 0.1);
+}
+
+.footer {
+  margin-top: 0dvh;
+  /* border: 1px solid #fff; */
+}
+.afterCaptureBtnContainer {
+  gap: 4dvh;
+}

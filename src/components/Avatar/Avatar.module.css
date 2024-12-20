@@ -1,0 +1,68 @@
+.AvatarPage {
+  height: calc(100dvh - 21dvh);
+  gap: 1dvh;
+  justify-content: flex-start !important;
+}
+.headingImgContainer {
+  width: 45dvh;
+  padding-top: 1dvh;
+}
+.main {
+  /* border: 1px solid #fff; */
+  width: 90%;
+  height: 60%;
+  flex-wrap: wrap;
+  gap: 1dvh;
+}
+.singleImg {
+  overflow: hidden;
+  cursor: pointer;
+}
+&:hover .hoverContainer {
+  opacity: 1;
+}
+
+.parent {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 2vw;
+}
+&:hover .imgContainer {
+  transform: scale(1.1);
+}
+.imgContainer {
+  width: 100%;
+  height: 100%;
+  transition: all ease 0.5s;
+  border-radius: 2vw;
+}
+.showHoverContainer {
+  opacity: 1 !important;
+  border: 1vw solid var(--themeColor1);
+  overflow: hidden;
+  border-radius: 2vw;
+}
+.hoverContainer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(transparent, transparent, rgba(0, 0, 0, 1));
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  transition: all ease 0.5s;
+  overflow: hidden;
+  border-radius: 2vw;
+}
+.selectIcon {
+  position: absolute;
+  bottom: 5%;
+  width: 5vw;
+}
+
+.horiImg {
+  width: 15.5dvh;
+}
+.vertImg {
+  width: 15.5dvh;
+}

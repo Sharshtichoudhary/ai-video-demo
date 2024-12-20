@@ -1,0 +1,22 @@
+.HomePage {
+    gap: 3dvh;
+    height: calc(100dvh - 21dvh);
+    /* border: 1px solid #fff; */
+    justify-content: flex-start !important;
+}
+    .avatarContainer {
+      padding-top: 1dvh;
+      /* border: 1px solid #fff; */
+      width: 95%;
+      height: 65%;
+      flex-wrap: wrap;
+      gap: 1dvh;
+    }
+      .horiImg {
+        width: 16.5dvh;
+      }
+      .vertImg {
+        width: 16.5dvh;
+      }
+    
+  

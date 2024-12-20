@@ -1,0 +1,39 @@
+.OutputPage {
+  /* border: 1px solid #fff; */
+  height: calc(100dvh - 21dvh);
+  justify-content: flex-start !important;
+  gap: 2dvh;
+  padding-top: 1dvh;
+
+  .downloadTxtImg {
+    width: 43dvh;
+  }
+
+  .waitTxtImg {
+    width: 35dvh;
+  }
+
+  .loader {
+    margin-top: 20vw;
+    width: 70vw;
+  }
+  .generatedImgContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5dvh;
+    .imgWrapper {
+      background: linear-gradient(to right, #42d3d3, #f24ec1);
+      padding: 1vw;
+      .imgContainer {
+        border: 1px solid black;
+        width: 32dvh;
+      }
+    }
+
+    .btnContainer {
+      gap: 3vw;
+    }
+  }
+}

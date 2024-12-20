@@ -1,0 +1,144 @@
+@font-face {
+  font-family: "SilverForte";
+  src: url("./../public/Silver\ Forte\ GrungeDEMO.ttf") format("truetype");
+}
+@font-face {
+  font-family: "GothamBlack";
+  src: url("./../public/Gotham-Black.otf") format("truetype");
+}
+
+.silverForteFont {
+  font-family: "SilverForte", sans-serif;
+}
+
+.gothamBlack {
+  font-family: "GothamBlack", sans-serif;
+  color: #000;
+}
+
+:root {
+  --themeColor1: #fff;
+  --themeColor2: #a2c23c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /*  font-family: "GothamBlack", sans-serif; */
+}
+
+body {
+  background: url("./../src/assets/bg.jpg") center / cover repeat;
+  height: 100dvh;
+  overflow: hidden;
+  /* border: 1px solid #fff; */
+}
+
+h1 {
+  color: var(--themeColor1);
+  font-size: 6vw;
+  text-align: center;
+  line-height: 10vw;
+}
+
+a {
+  /* color: #646cff; */
+  text-decoration: none;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  border: none;
+  outline: none;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 1s linear infinite;
+}
+.loader::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0px;
+  border-radius: 50%;
+  border: 5px solid #000;
+  animation: prixClipFix 2s linear infinite;
+}
+
+.flex-row-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn1 {
+  color: #2e468c;
+  width: 40vw;
+  font-size: 4.5vw;
+  font-weight: 600;
+  padding: 1.5vw 2vw;
+  border-radius: 1.5vw;
+  background-color: var(--themeColor1);
+  box-shadow: 0 0 2vw rgba(255, 255, 255, 0.5);
+}
+
+.btnImg {
+  width: 16dvh;
+}
+
+.btn2 {
+  color: #2e468c;
+  width: 25vw;
+  font-size: 4vw;
+  font-weight: 600;
+  padding: 1vw 2vw;
+  border-radius: 2vw;
+  background-color: var(--themeColor1);
+  box-shadow: 0 0 2vw rgba(255, 255, 255, 0.5);
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+}
