@@ -18,7 +18,9 @@ import selectBtn from "../../assets/avatar/select-btn.png";
 
 export default function AvatarPage({
   setGeneratedImg,
+  setGeneratedVideo,
   capturedImg,
+  capturedVideo,
   setUrl,
   gender,
 }) {
@@ -27,6 +29,8 @@ export default function AvatarPage({
   const [originalImg, setOriginalImg] = useState();
   const [selectedImageIndex, setSelectedImageIndex] = useState();
   const [cards, setCards] = useState();
+
+  // console.log(selectedImageIndex);
 
   // console.log(cardsArr);
 
@@ -91,40 +95,92 @@ export default function AvatarPage({
   };
 
   // submitting the selected image and post request to api
-  const handleSubmit = () => {
-    // console.log("submitting selected avatar");
+  // const handleSubmit = () => {
+  //   // console.log("submitting selected avatar");
 
+  //   setGeneratedImg("");
+  //   if (capturedImg) {
+  //     base64(originalImg, (base64Data) => {
+  //       // console.log("Base64 data:", base64Data);
+  //       setSelectedImage(base64Data);
+
+  //       try {
+  //         axios
+  //           .post("https://52.56.108.15/trail_rec", {
+  //             image: capturedImg.split(",")[1],
+  //             choice: base64Data.split(",")[1],
+  //             // status: "PREMIUM",
+  //           })
+  //           .then(function (response) {
+  //             // console.log(response);
+  //             setGeneratedImg(`data:image/webp;base64,${response.data.result}`);
+
+  //             // image uploading on server
+  //             // getUrl(response.data.result);
+  //           })
+  //           .catch(function (error) {
+  //             console.log(error);
+  //           });
+  //         navigate("/output");
+  //       } catch (error) {
+  //         console.error("Error occurred during axios request:", error);
+  //       }
+  //     });
+  //   } else {
+  //     toast.error(
+  //       "Please select an image or capture your photo again...",
+  //       toastOptions
+  //     );
+  //   }
+  // };
+
+  const handleSubmit = async () => {
     setGeneratedImg("");
-    if (capturedImg) {
-      base64(originalImg, (base64Data) => {
-        // console.log("Base64 data:", base64Data);
+    setGeneratedVideo("");
+
+    if (capturedImg && capturedVideo) {
+      // Convert the original image to base64
+      base64(originalImg, async (base64Data) => {
         setSelectedImage(base64Data);
 
         try {
-          axios
-            .post("https://52.56.108.15/trail_rec", {
-              image: capturedImg.split(",")[1],
-              choice: base64Data.split(",")[1],
-              // status: "PREMIUM",
-            })
-            .then(function (response) {
-              // console.log(response);
-              setGeneratedImg(`data:image/webp;base64,${response.data.result}`);
+          // Step 1: Call the first API to process the image and video
+          const response = await axios.post("https://52.56.108.15/trail_rec", {
+            image: capturedImg.split(",")[1],
+            choice: base64Data.split(",")[1],
+          });
 
-              // image uploading on server
-              getUrl(response.data.result);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
+          const firstApiResult = await response.data.result;
+
+          // Step 2: Call the second API with both the first API result, captured image, and captured video
+          const secondApiResponse = await axios.post(
+            "https://h.ngrok.pro/upload-media",
+            {
+              img: firstApiResult,
+              video: capturedVideo,
+            }
+          );
+
+          const secondApiResult = await secondApiResponse.data.message;
+
+          // Step 3: Set both results into the state
+          setGeneratedImg(`data:image/webp;base64,${firstApiResult}`);
+          // setGeneratedVideo
+          setGeneratedVideo(`data:video/webm;base64,${secondApiResult}`);
+
+          // output page
           navigate("/output");
         } catch (error) {
-          console.error("Error occurred during axios request:", error);
+          console.error("Error during API calls:", error);
+          toast.error(
+            "There was an error processing your request.",
+            toastOptions
+          );
         }
       });
     } else {
       toast.error(
-        "Please select an image or capture your photo again...",
+        "Please select an image, capture a photo, and/or video again...",
         toastOptions
       );
     }

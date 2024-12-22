@@ -23,12 +23,33 @@
     justify-content: center;
     align-items: center;
     gap: 5dvh;
+    /* border: 2px solid red; */
+
     .imgWrapper {
       background: linear-gradient(to right, #42d3d3, #f24ec1);
       padding: 1vw;
+      /* border: 2px solid rgb(65, 158, 79); */
+
       .imgContainer {
-        border: 1px solid black;
+        /* border: 1px solid black; */
         width: 32dvh;
+        position: relative;
+        /* border: 2px solid red; */
+
+        .videoGenerated {
+          border: 2px solid #f24ec1;
+          /* object-fit: cover; */
+          width: 100% !important;
+          /* height: auto; */
+        }
+        .playIcon {
+          position: absolute;
+          font-size: 10vw;
+          color: #f24ec1;
+          bottom: 0;
+          right: 0;
+          /* border: 2px solid rgb(65, 158, 79); */
+        }
       }
     }
 

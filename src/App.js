@@ -12,10 +12,12 @@ import "./index.css";
 
 export default function App() {
   const [capturedImg, setCapturedImg] = useState();
+  const [capturedVideo, setCapturedVideo] = useState(null);
   const [generatedImg, setGeneratedImg] = useState();
+  const [generatedVideo, setGeneratedVideo] = useState();
   const [url, setUrl] = useState();
   const [gender, setGender] = useState();
-
+  console.log(generatedVideo);
   return (
     <BrowserRouter>
       {/* header */}
@@ -31,7 +33,12 @@ export default function App() {
         {/* gender-page */}
         <Route
           path="/camera"
-          element={<Camera setCapturedImg={setCapturedImg} />}
+          element={
+            <Camera
+              setCapturedImg={setCapturedImg}
+              setCapturedVideo={setCapturedVideo}
+            />
+          }
         />
 
         {/* avatar-page */}
@@ -40,7 +47,9 @@ export default function App() {
           element={
             <Avatar
               setGeneratedImg={setGeneratedImg}
+              setGeneratedVideo={setGeneratedVideo}
               capturedImg={capturedImg}
+              capturedVideo={capturedVideo}
               setUrl={setUrl}
               gender={gender}
             />
@@ -51,7 +60,12 @@ export default function App() {
         <Route
           path="/output"
           element={
-            <Output generatedImg={generatedImg} url={url} setUrl={setUrl} />
+            <Output
+              generatedImg={generatedImg}
+              url={url}
+              generatedVideo={generatedVideo}
+              setUrl={setUrl}
+            />
           }
         />
       </Routes>
