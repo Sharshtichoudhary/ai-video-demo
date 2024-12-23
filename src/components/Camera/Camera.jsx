@@ -32,53 +32,66 @@ export default function CameraPage({ setCapturedImg, setCapturedVideo }) {
     theme: "light",
   };
 
-  const startRecording = async () => {
-    try {
-      // Access user's webcam
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: false,
-      });
+  useEffect(() => {
+    const initializeCamera = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: false,
+        });
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
+      } catch (err) {
+        console.error("Error accessing webcam: ", err);
+        toast.error("Unable to access your camera.", toastOptions);
+      }
+    };
 
-      videoRef.current.srcObject = stream;
-      videoRef.current.play();
+    initializeCamera();
 
-      // Start recording
-      const mediaRecorder = new MediaRecorder(stream);
-      const chunks = [];
-      setIsRecording(true);
+    return () => {
+      // Stop the webcam stream when the component is unmounted
+      if (videoRef.current && videoRef.current.srcObject) {
+        const tracks = videoRef.current.srcObject.getTracks();
+        tracks.forEach((track) => track.stop());
+      }
+    };
+  }, []);
 
-      mediaRecorder.ondataavailable = (e) => {
-        chunks.push(e.data);
+  const startRecording = () => {
+    const stream = videoRef.current.srcObject;
+    if (!stream) return;
+
+    const mediaRecorder = new MediaRecorder(stream);
+    const chunks = [];
+    setIsRecording(true);
+
+    mediaRecorder.ondataavailable = (e) => {
+      chunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type: "video/webm" });
+
+      // Convert Blob to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64data = reader.result.split(",")[1]; // Extract base64 string
+        console.log("Base64 Video:", base64data);
+        setVideoURL(base64data); // Save base64 URL if needed
       };
 
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks, { type: "video/webm" });
+      reader.readAsDataURL(blob); // Read the Blob as a base64 string
 
-        // Convert Blob to base64
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64data = reader.result.split(",")[1]; // Extract base64 string
-          console.log("Base64 Video:", base64data);
-          setVideoURL(base64data); // Save base64 URL if needed
-        };
+      setIsRecording(false);
+    };
 
-        reader.readAsDataURL(blob); // Read the Blob as a base64 string
-
-        // Stop the webcam stream
-        stream.getTracks().forEach((track) => track.stop());
-        setIsRecording(false);
-      };
-
-      // Start recording and stop after 3 seconds
-      mediaRecorder.start();
-      setTimeout(() => {
-        mediaRecorder.stop();
-        captureSnapshot();
-      }, 3000);
-    } catch (err) {
-      console.error("Error accessing webcam: ", err);
-    }
+    // Start recording and stop after 3 seconds
+    mediaRecorder.start();
+    setTimeout(() => {
+      mediaRecorder.stop();
+      captureSnapshot();
+    }, 3000);
   };
 
   const captureSnapshot = () => {
@@ -138,16 +151,16 @@ export default function CameraPage({ setCapturedImg, setCapturedVideo }) {
           )}
 
           {/* Display the captured image (screenshot) */}
-          {img && (
-            <div className={styles.screenshotContainer}>
-              <h3>Screenshot</h3>
-              <img
-                src={img}
-                alt="Captured Screenshot"
-                className={styles.capturedImage}
-              />
-            </div>
-          )}
+          {/* {img && ( */}
+          {/* <div className={styles.screenshotContainer}> */}
+          {/* <h3>Screenshot</h3> */}
+          {/* <img */}
+          {/* src={img} */}
+          {/* alt="Captured Screenshot" */}
+          {/* className={styles.capturedImage} */}
+          {/* /> */}
+          {/* </div> */}
+          {/* // )} */}
         </div>
       </main>
 
