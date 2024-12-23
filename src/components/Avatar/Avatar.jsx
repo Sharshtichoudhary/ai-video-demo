@@ -29,6 +29,7 @@ export default function AvatarPage({
   const [originalImg, setOriginalImg] = useState();
   const [selectedImageIndex, setSelectedImageIndex] = useState();
   const [cards, setCards] = useState();
+  const [loading, setLoading] = useState(false);
 
   // console.log(selectedImageIndex);
 
@@ -139,6 +140,7 @@ export default function AvatarPage({
     setGeneratedVideo("");
 
     if (capturedImg && capturedVideo) {
+      setLoading(true);
       // Convert the original image to base64
       base64(originalImg, async (base64Data) => {
         setSelectedImage(base64Data);
@@ -151,6 +153,7 @@ export default function AvatarPage({
           });
 
           const firstApiResult = await response.data.result;
+          toast.success("Image generated! Processing video...", toastOptions);
 
           // Step 2: Call the second API with both the first API result, captured image, and captured video
           const secondApiResponse = await axios.post(
@@ -176,6 +179,8 @@ export default function AvatarPage({
             "There was an error processing your request.",
             toastOptions
           );
+        } finally {
+          setLoading(false);
         }
       });
     } else {
@@ -228,6 +233,12 @@ export default function AvatarPage({
       <footer onClick={handleSubmit} className={`flex-row-center btnImg`}>
         <img src={selectBtn} alt="select-button" />
       </footer>
+      {loading && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loader}></div>
+          {/* <p>Processing your request...</p> */}
+        </div>
+      )}
       <ToastContainer />
     </div>
   );
